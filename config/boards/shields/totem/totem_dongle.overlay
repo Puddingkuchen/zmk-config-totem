@@ -1,11 +1,26 @@
-#include "totem.dtsi"
+#include <dt-bindings/zmk/matrix_transform.h>
 
- &kscan0 {
-     col-gpios
-         = <&xiao_d 8 GPIO_ACTIVE_HIGH>
-         , <&xiao_d 9 GPIO_ACTIVE_HIGH>
-         , <&xiao_d 10 GPIO_ACTIVE_HIGH>
-         , <&xiao_d 5 GPIO_ACTIVE_HIGH>
-         , <&xiao_d 4 GPIO_ACTIVE_HIGH>
-         ;
- };
+&nice_view_spi {
+    status = "okay";
+    nice_view: ls0xx@0 {
+        compatible = "sharp,ls0xx";
+        spi-max-frequency = <1000000>;
+        reg = <0>;
+        width = <160>;
+        height = <68>;
+    };
+};
+
+/ {
+    chosen {
+        zmk,kscan = &mock_kscan;
+        zephyr,display = &nice_view;
+    };
+
+    mock_kscan: mock_kscan_0 {
+        compatible = "zmk,kscan-mock";
+        columns = <0>;
+        rows = <0>;
+        events = <0>;
+    };
+};
